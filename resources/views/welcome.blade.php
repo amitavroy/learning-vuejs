@@ -12,27 +12,12 @@
               <div class="row">
                 <div class="col-sm-12">
                   <h1>My Todos</h1>
+
                   <todo-item :todos="todos"></todo-item>
                   
                   <todo-add-form :newtodo.sync="newTodo"></todo-add-form>
                 </div>
               </div>
-              
-              <template id="todo-list-template">
-                <div>
-                  <ul class="list-group">
-                    <li 
-                      v-for="todo in todos"
-                      class="list-group-item"
-                      v-bind:class="{ 'completed' : todo.completed }">
-                        @{{todo.title}}
-                        <button class="btn btn-xs pull-right margin-right-10" 
-                        v-bind:class="{'btn-success' : todo.completed, 'btn-danger' : !todo.completed}"
-                        v-on:click="todoCompleted(todo)">@{{todo.completed ? 'Completed' : 'Pending'}}</button>
-                      </li>
-                  </ul>
-                </div>
-              </template>
               
               <template id="todo-add-form">
                 <form v-on:submit.prevent="addTodo()">
