@@ -1,2 +1,5 @@
-// @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+li.completed {
+  text-decoration: line-through;
+}
