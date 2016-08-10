@@ -5628,4 +5628,7 @@ a.list-group-item-danger.active:hover, a.list-group-item-danger.active:focus {
 li.completed {
   text-decoration: line-through; }
 
+.margin-right-10 {
+  margin-right: 10px; }
+
 /*# sourceMappingURL=app.css.map */
