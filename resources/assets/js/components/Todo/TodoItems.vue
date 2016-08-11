@@ -1,7 +1,17 @@
 <script>
-
     export default {
-        props: ['todos'],
+        created() {
+            this.$http.get('api/v1/todos').then((response) => {
+                console.log(response.data);
+                this.todos = response.data;
+            });
+        },
+
+        data() {
+            return {
+                todos: {}
+            }
+        },
 
         methods: {
             todoCompleted(todo) {
@@ -16,6 +26,7 @@
 </script>
 
 <template>
+    <!-- <pre>{{ $data | json }}</pre> -->
     <div>
       <ul class="list-group">
         <li 

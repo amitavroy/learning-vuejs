@@ -25,3 +25,8 @@ indent_size = 2
 [*.blade.php]
 indent_style = space
 indent_size = 4
+
+# Indentation for php files
+[*.php]
+indent_style = space
+indent_size = 4

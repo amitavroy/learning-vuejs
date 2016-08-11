@@ -1,7 +1,10 @@
 import Vue from 'vue';
+import VueResource from 'vue-resource';
 
 import TodoItems from './components/Todo/TodoItems.vue';
 import TodoAddForm from './components/Todo/TodoAdd.vue';
+
+Vue.use(VueResource);
 
 Vue.component('todo-item', TodoItems);
 Vue.component('todo-add-form', TodoAddForm);
@@ -10,7 +13,6 @@ new Vue({
     el: '#vue-app',
 
     data: {
-        todos: [{id: 1, title: 'Go Shopping', completed: true}],
         newTodo: {}
     },
 
