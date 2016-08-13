@@ -28,11 +28,7 @@ new Vue({
 
     watch: {
         newTodo(newval, oldval) {
-            this.todos.push({
-                id: Math.floor(Date.now()),
-                title: newval.title,
-                completed: false
-            });
+            this.todos.push(newval);
         }
     }
 });

@@ -4,11 +4,27 @@
 
         methods: {
             todoCompleted(todo) {
-                todo.completed = !todo.completed
+                var postData = {id: todo.id};
+                this.$http.post('api/v1/todo-status', postData).then((response) =>  {
+                    /*check if it's a success*/
+                    if (response.status == 200) {
+                        todo.completed = !todo.completed
+                    }
+                }).catch((response) => {
+                    console.log('Error', response);
+                });
             },
 
             todoDelete(todo) {
-                this.todos.$remove(todo);
+                var postData = {id: todo.id};
+                this.$http.post('api/v1/todo-delete', postData).then((response) =>  {
+                    /*check if it's a success*/
+                    if (response.status == 200) {
+                        this.todos.$remove(todo);
+                    }
+                }).catch((response) => {
+                    console.log('Error', response);
+                });
             }
         }
     }
@@ -16,6 +32,7 @@
 
 <template>
     <!-- <pre>{{ $data | json }}</pre> -->
+    <!-- <pre>{{ todos | json }}</pre> -->
     <div>
       <ul class="list-group">
         <li 
