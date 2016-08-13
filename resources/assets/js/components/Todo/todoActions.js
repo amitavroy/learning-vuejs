@@ -18,3 +18,16 @@ export const saveTodo = function(store, postData) {
         console.log('Error', response);
     });
 }
+
+export const deleteTodo = function(store, todo) {
+    var postData = {id: todo.id};
+    this.$http.post('api/v1/todo-delete', postData).then((response) =>  {
+        /*check if it's a success*/
+        if (response.status == 200) {
+            var dispatch = store.dispatch;
+            dispatch('DELETE_TODO', todo);
+        }
+    }).catch((response) => {
+        console.log('Error', response);
+    });
+}

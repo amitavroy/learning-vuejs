@@ -9,6 +9,10 @@ const mutations = {
 
     ADD_TODO (state, todo) {
         state.todos.push(todo);
+    },
+
+    DELETE_TODO (state, todo) {
+        state.todos.$remove(todo);
     }
 }
 

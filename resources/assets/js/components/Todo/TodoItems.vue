@@ -1,5 +1,5 @@
 <script>
-    import {getTodos} from './todoActions';
+    import {getTodos, deleteTodo} from './todoActions';
 
     export default {
         created() {
@@ -20,15 +20,7 @@
             },
 
             todoDelete(todo) {
-                var postData = {id: todo.id};
-                this.$http.post('api/v1/todo-delete', postData).then((response) =>  {
-                    /*check if it's a success*/
-                    if (response.status == 200) {
-                        this.todos.$remove(todo);
-                    }
-                }).catch((response) => {
-                    console.log('Error', response);
-                });
+                this.deleteTodo(todo);
             }
         },
 
@@ -37,7 +29,7 @@
                 todoStore: state => state.todoStore.todos
             },
             actions: {
-                getTodos
+                getTodos, deleteTodo
             }
         }
     }
