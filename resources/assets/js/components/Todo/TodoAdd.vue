@@ -10,8 +10,16 @@
         
         methods: {
             addTodo() {
-                this.newtodo = this.todo;
-                this.todo = {id: null, title: '', completed: false};
+                var postData = {title: this.todo.title};
+                this.$http.post('api/v1/todo', postData).then((response) =>  {
+                    /*check if it's a success*/
+                    if (response.status == 201) {
+                        this.newtodo = response.data;
+                        this.todo = {id: null, title: '', completed: false};
+                    }
+                }).catch((response) => {
+                    console.log('Error', response);
+                });
             }
         }
     }

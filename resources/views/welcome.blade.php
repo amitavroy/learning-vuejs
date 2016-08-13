@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Laravel</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" type="text/css" href="{{ url('css/app.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ url('plugins/fa/css/font-awesome.min.css') }}">
     </head>
@@ -20,7 +21,7 @@
                         <div class="panel-heading">My Todos</div>
                         <div class="panel-body">
                             {{-- Body content start --}}
-                            <todo-item></todo-item>
+                            <todo-item :todos.sync="todos"></todo-item>
                             <todo-add-form :newtodo.sync="newTodo"></todo-add-form>
                             {{-- Body content end --}}
                         </div>

@@ -19,4 +19,6 @@ Route::group(['prefix' => 'api/v1'], function() {
   Route::get('todos', function() {
     return App\Todo::all();
   });
+
+  Route::post('todo', '\App\Http\Controllers\Api\TodoApiController@saveTodo');
 });

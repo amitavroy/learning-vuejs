@@ -1,17 +1,6 @@
 <script>
     export default {
-        created() {
-            this.$http.get('api/v1/todos').then((response) => {
-                console.log(response.data);
-                this.todos = response.data;
-            });
-        },
-
-        data() {
-            return {
-                todos: {}
-            }
-        },
+        props: ['todos'],
 
         methods: {
             todoCompleted(todo) {
