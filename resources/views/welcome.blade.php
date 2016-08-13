@@ -21,8 +21,8 @@
                         <div class="panel-heading">My Todos</div>
                         <div class="panel-body">
                             {{-- Body content start --}}
-                            <todo-item :todos.sync="todos"></todo-item>
-                            <todo-add-form :newtodo.sync="newTodo"></todo-add-form>
+                            <todo-item></todo-item>
+                            <todo-add-form></todo-add-form>
                             {{-- Body content end --}}
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 <script>
+    import {saveTodo} from './todoActions';
+
     export default {
-        props: ['newtodo'],
-        
         data() {
             return {
                 todo: {id: null, title: '', completed: false}
@@ -10,16 +10,17 @@
         
         methods: {
             addTodo() {
-                var postData = {title: this.todo.title};
-                this.$http.post('api/v1/todo', postData).then((response) =>  {
-                    /*check if it's a success*/
-                    if (response.status == 201) {
-                        this.newtodo = response.data;
-                        this.todo = {id: null, title: '', completed: false};
-                    }
-                }).catch((response) => {
-                    console.log('Error', response);
-                });
+                this.saveTodo(this.todo);
+                this.todo = {id: null, title: '', completed: false};
+            }
+        },
+
+        vuex: {
+            getters: {
+                todoStore: state => state.todoStore.todos
+            },
+            actions: {
+                saveTodo
             }
         }
     }

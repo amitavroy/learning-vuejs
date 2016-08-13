@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueResource from 'vue-resource';
 
+import store from './vuex/store';
 import TodoItems from './components/Todo/TodoItems.vue';
 import TodoAddForm from './components/Todo/TodoAdd.vue';
 
@@ -15,20 +16,5 @@ Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name=csrf
 new Vue({
     el: '#vue-app',
 
-    created() {
-        this.$http.get('api/v1/todos').then((response) => {
-            this.todos = response.data;
-        });
-    },
-
-    data: {
-        newTodo: {},
-        todos: {}
-    },
-
-    watch: {
-        newTodo(newval, oldval) {
-            this.todos.push(newval);
-        }
-    }
+    store
 });

@@ -1,6 +1,10 @@
 <script>
+    import {getTodos} from './todoActions';
+
     export default {
-        props: ['todos'],
+        created() {
+            this.getTodos();
+        },
 
         methods: {
             todoCompleted(todo) {
@@ -26,17 +30,26 @@
                     console.log('Error', response);
                 });
             }
+        },
+
+        vuex: {
+            getters: {
+                todoStore: state => state.todoStore.todos
+            },
+            actions: {
+                getTodos
+            }
         }
     }
 </script>
 
 <template>
     <!-- <pre>{{ $data | json }}</pre> -->
-    <!-- <pre>{{ todos | json }}</pre> -->
+    <pre>{{ todoStore | json }}</pre>
     <div>
       <ul class="list-group">
         <li 
-          v-for="todo in todos"
+          v-for="todo in todoStore"
           class="list-group-item"
           v-bind:class="{ 'completed' : todo.completed }">
             {{todo.title}}
