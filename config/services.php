@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'rollbar' => [
+        'access_token' => env('ROLLBAR_ACCESS_TOKEN'),
+        'environment' => env('APP_ENV', 'production'),
+        'root' => base_path(),
+    ],
+
 ];

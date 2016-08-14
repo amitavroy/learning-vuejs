@@ -16,6 +16,7 @@ class TodoApiController extends Controller
         ]);
 
         if ($validator->fails()) {
+            \Rollbar::report_message('Client side validation failed.', \Level::WARNING);
             return response($validator->errors()->getMessages(), 422);
         }
 
