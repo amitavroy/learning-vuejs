@@ -1,5 +1,6 @@
 <script>
     import {getTodos, deleteTodo} from './todoActions';
+    import { getTodoStore } from './getTodoStore.js';
 
     export default {
         created() {
@@ -26,7 +27,7 @@
 
         vuex: {
             getters: {
-                todoStore: state => state.todoStore.todos
+                todoStore: getTodoStore
             },
             actions: {
                 getTodos, deleteTodo
