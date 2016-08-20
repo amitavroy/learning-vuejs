@@ -1,17 +1,17 @@
 <script>
-    import {saveTodo} from './todoActions';
+    import {saveTodo} from './todoActions'
 
     export default {
-        data() {
+        data () {
             return {
                 todo: {id: null, title: '', completed: false}
             }
         },
         
         methods: {
-            addTodo() {
-                this.saveTodo(this.todo);
-                this.todo = {id: null, title: '', completed: false};
+            addTodo () {
+                this.saveTodo(this.todo)
+                this.todo = {id: null, title: '', completed: false}
             }
         },
 

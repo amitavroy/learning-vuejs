@@ -1,25 +1,16 @@
 <script>
-    import {getTodos, deleteTodo} from './todoActions';
+    import {getTodos, deleteTodo, toggleTodoStatus} from './todoActions';
 
     export default {
-        created() {
+        created () {
             this.getTodos();
         },
 
         methods: {
-            todoCompleted(todo) {
-                var postData = {id: todo.id};
-                this.$http.post('api/v1/todo-status', postData).then((response) =>  {
-                    /*check if it's a success*/
-                    if (response.status == 200) {
-                        todo.completed = !todo.completed
-                    }
-                }).catch((response) => {
-                    console.log('Error', response);
-                });
+            todoCompleted (todo) {
+                this.toggleTodoStatus(todo)
             },
-
-            todoDelete(todo) {
+            todoDelete (todo) {
                 this.deleteTodo(todo);
             }
         },
@@ -29,7 +20,7 @@
                 todoStore: state => state.todoStore.todos
             },
             actions: {
-                getTodos, deleteTodo
+                getTodos, deleteTodo, toggleTodoStatus
             }
         }
     }
@@ -37,7 +28,7 @@
 
 <template>
     <!-- <pre>{{ $data | json }}</pre> -->
-    <pre>{{ todoStore | json }}</pre>
+    <!-- <pre>{{ todoStore | json }}</pre> -->
     <div>
       <ul class="list-group">
         <li 
