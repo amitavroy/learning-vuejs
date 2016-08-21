@@ -10,8 +10,12 @@
         
         methods: {
             addTodo () {
-                this.saveTodo(this.todo)
-                this.todo = {id: null, title: '', completed: false}
+                if (this.$todoAddForm.valid) {
+                    this.saveTodo(this.todo)
+                    this.todo = {id: null, title: '', completed: false}
+                } else {
+                    window.alert('Todo text cannot be blank')
+                }
             }
         },
 
@@ -27,15 +31,20 @@
 </script>
 
 <template>
-    <form v-on:submit.prevent="addTodo()">
-      <div class="form-group">
-        <input type="text" class="form-control" placeholder="Add a new Todo" v-model="todo.title">
-      </div>
-      
-      <div class="form-group">
-        <button class="btn btn-primary">
-            <i class="fa fa-save"></i> Save
-        </button>
-      </div>
-    </form>
+    <validator name="todoAddForm">
+        <form v-on:submit.prevent="addTodo()" novalidate>
+          <div class="form-group">
+            <input 
+                id="todotext" 
+                type="text" 
+                class="form-control" 
+                placeholder="Add a new Todo" 
+                v-validate:todotext="{required: { rule: true, message: 'Todo text is required.' }}"
+                v-model="todo.title">
+                <span v-if="$todoAddForm.todotext.required && $todoAddForm.todotext.touched === true">
+                    {{ $todoAddForm.todotext.required }}
+                </span>
+          </div>
+        </form>
+    </validator>
 </template>
