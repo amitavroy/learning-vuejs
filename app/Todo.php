@@ -10,10 +10,9 @@ class Todo extends Model
 
     public function getCompletedAttribute($value)
     {
-        if ($value) {
+        if ($value)
             return true;
-        }
-
+        
         return false;
     }
 }

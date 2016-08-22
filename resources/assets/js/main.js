@@ -16,6 +16,6 @@ Vue.component('todo-add-form', TodoAddForm)
 Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name=csrf-token]").getAttribute('content')
 
 new Vue({
-    el: '#vue-app',
+    el: 'body',
     store
 })
