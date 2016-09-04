@@ -1,7 +1,12 @@
 <script>
     import {getTodos, deleteTodo, toggleTodoStatus} from './todoActions';
+    import TodoAdd from './TodoAdd.vue'
 
     export default {
+        components: {
+            TodoAdd
+        },
+
         created () {
             this.getTodos();
         },
@@ -47,5 +52,6 @@
             v-on:click="todoCompleted(todo)">{{todo.completed ? 'Completed' : 'Pending'}}</button>
           </li>
       </ul>
+      <todo-add></todo-add>
     </div>
 </template>
