@@ -19,5 +19,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('todo', '\App\Http\Controllers\Api\TodoApiController@saveTodo');
         Route::post('todo-delete', '\App\Http\Controllers\Api\TodoApiController@deleteTodo');
         Route::post('todo-status', '\App\Http\Controllers\Api\TodoApiController@changeTodoStatus');
+
+        /*Movie urls*/
+        Route::get('movie-list', '\App\Http\Controllers\Api\MovieApiController@getMovieList');
+        Route::post('movie-save', '\App\Http\Controllers\Api\MovieApiController@saveNewMovie');
     });
 });
