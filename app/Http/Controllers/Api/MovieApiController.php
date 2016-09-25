@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Movie;
 use Illuminate\Http\Request;
 
-class MovieApiController
+class MovieApiController extends Controller
 {
     public function getMovieList()
     {
-        $movies = Movies::orderBy('updated_at')->get();
+        $movies = Movie::orderBy('updated_at')->get();
 
         return response($movies, 200);
     }

@@ -19588,6 +19588,149 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _movieActions = require('./movieActions');
+
+exports.default = {
+    data: function data() {
+        return {
+            newMovie: {
+                name: '',
+                director: '',
+                year: '',
+                language: ''
+            }
+        };
+    },
+
+
+    methods: {
+        handleAddMovieSubmit: function handleAddMovieSubmit() {
+            if (this.$addMovie.valid) {
+                this.saveMovie(this.newMovie);
+                this.newMovie = {
+                    name: '',
+                    director: '',
+                    year: '',
+                    language: ''
+                };
+            } else {
+                window.alert('Form data is not correct');
+            }
+        }
+    },
+
+    vuex: {
+        actions: {
+            saveMovie: _movieActions.saveMovie
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<pre>{{ $data | json }}</pre>\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <validator name=\"addMovie\">\n            <form v-on:submit.prevent=\"handleAddMovieSubmit()\">\n                <div class=\"form-group\">\n                    <label>Name</label>\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Movie name\" id=\"moviename\" v-model=\"newMovie.name\" v-validate:moviename=\"{required: { rule: true, message: 'Movie name is required.' }}\">\n                </div>\n\n                <div class=\"form-group\">\n                    <label>Director</label>\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Director name\" id=\"directorname\" v-model=\"newMovie.director\" v-validate:directorname=\"{required: { rule: true, message: 'Director name is required.' }}\">\n                </div>\n\n                <div class=\"form-group\">\n                    <label>Year</label>\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Year\" id=\"movieyear\" v-model=\"newMovie.year\" v-validate:movieyear=\"{required: { rule: true, message: 'Year is required.' }}\">\n                </div>\n\n                <div class=\"form-group\">\n                    <label>Language</label>\n                    <input type=\"text\" class=\"form-control\" placeholder=\"Language of movie\" id=\"movielanuage\" v-model=\"newMovie.language\" v-validate:movielanuage=\"{required: { rule: true, message: 'Language is required.' }}\">\n                </div>\n\n                <button class=\"btn btn-success\"><i class=\"fa fa-save\"></i> Save</button>\n            </form>\n        </validator>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-a15c09b0", module.exports)
+  } else {
+    hotAPI.update("_v-a15c09b0", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"./movieActions":12,"vue":7,"vue-hot-reload-api":3}],11:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _movieActions = require('./movieActions');
+
+exports.default = {
+    created: function created() {
+        this.getMovies();
+    },
+
+
+    vuex: {
+        getters: {
+            movieStore: function movieStore(state) {
+                return state.movieStore;
+            }
+        },
+        actions: {
+            getMovies: _movieActions.getMovies
+        }
+    }
+};
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<!-- <pre>{{ movieStore | json }}</pre> -->\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <p><a v-link=\"{name: 'movies-add'}\" class=\"btn btn-primary\"><i class=\"fa fa-plus\"></i> Add Movie</a></p>\n    </div>\n</div>\n<div class=\"row\">\n    <div class=\"col-md-12\">\n        <ul class=\"list-group\">\n            <li class=\"list-group-item\" v-for=\"movie in movieStore.movies\">\n                <h3>{{movie.name}}</h3>\n                <span class=\"meta\">\n                    <strong>Director:</strong> {{movie.director}} <br>\n                    <strong>Language:</strong> {{movie.language}} <br>\n                    <strong>Year:</strong> {{movie.year}}\n                </span>\n            </li>\n        </ul>\n    </div>\n</div>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-51282cb2", module.exports)
+  } else {
+    hotAPI.update("_v-51282cb2", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"./movieActions":12,"vue":7,"vue-hot-reload-api":3}],12:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getMovies = exports.getMovies = function getMovies(store) {
+    this.$http.get('api/v1/movie-list').then(function (response) {
+        console.log('response', response);
+        if (response.status == 200) {
+            var dispatch = store.dispatch;
+            dispatch('GET_MOVIE_LIST', response.data);
+        }
+    }).catch(function (response) {
+        console.log('Error', response);
+    });
+};
+
+var saveMovie = exports.saveMovie = function saveMovie(store, movie) {
+    this.$http.post('api/v1/movie-save', movie).then(function (response) {
+        /*check if it's a success*/
+        if (response.status == 201) {
+            console.log('response', response);
+        }
+    }).catch(function (response) {
+        console.log('Error', response);
+    });
+};
+
+},{}],13:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var state = {
+    movies: []
+};
+
+var mutations = {
+    GET_MOVIE_LIST: function GET_MOVIE_LIST(state, movies) {
+        state.movies = movies;
+    }
+};
+
+exports.default = {
+    state: state, mutations: mutations
+};
+
+},{}],14:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _todoActions = require('./todoActions');
 
 exports.default = {
@@ -19632,7 +19775,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-c91c5c92", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./todoActions":12,"vue":7,"vue-hot-reload-api":3}],11:[function(require,module,exports){
+},{"./todoActions":16,"vue":7,"vue-hot-reload-api":3}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19689,7 +19832,7 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-4697d1d6", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./TodoAdd.vue":10,"./todoActions":12,"vue":7,"vue-hot-reload-api":3}],12:[function(require,module,exports){
+},{"./TodoAdd.vue":14,"./todoActions":16,"vue":7,"vue-hot-reload-api":3}],16:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19742,7 +19885,7 @@ var toggleTodoStatus = exports.toggleTodoStatus = function toggleTodoStatus(stor
     });
 };
 
-},{}],13:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19783,7 +19926,7 @@ exports.default = {
     mutations: mutations
 };
 
-},{"underscore":2}],14:[function(require,module,exports){
+},{"underscore":2}],18:[function(require,module,exports){
 'use strict';
 
 var _vue = require('vue');
@@ -19814,19 +19957,34 @@ var _Dashboard = require('./pages/Dashboard.vue');
 
 var _Dashboard2 = _interopRequireDefault(_Dashboard);
 
+var _Movies = require('./pages/Movies.vue');
+
+var _Movies2 = _interopRequireDefault(_Movies);
+
+var _MovieList = require('./components/Movies/MovieList.vue');
+
+var _MovieList2 = _interopRequireDefault(_MovieList);
+
+var _MovieAdd = require('./components/Movies/MovieAdd.vue');
+
+var _MovieAdd2 = _interopRequireDefault(_MovieAdd);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* Setting up the modules with Vue */
-
+/* Importing modules */
+_vue2.default.use(_vueResource2.default);
 
 /* Importing components */
-_vue2.default.use(_vueResource2.default); /* Importing modules */
 
 _vue2.default.use(_vueValidator2.default);
 _vue2.default.use(_vueRouter2.default);
 
 _vue2.default.component('app', _App2.default);
 _vue2.default.component('dashboard', _Dashboard2.default);
+_vue2.default.component('movies', _Movies2.default);
+_vue2.default.component('movielist', _MovieList2.default);
+_vue2.default.component('movieadd', _MovieAdd2.default);
 
 /*Adding CSRF token to all HTTP Request*/
 _vue2.default.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("meta[name=csrf-token]").getAttribute('content');
@@ -19841,12 +19999,26 @@ appRoutes.map({
     '/': {
         name: 'home',
         component: _Dashboard2.default
+    },
+    'movies': {
+        name: 'movies',
+        component: _Movies2.default,
+        subRoutes: {
+            '/list': {
+                name: 'movies-list',
+                component: _MovieList2.default
+            },
+            'add': {
+                name: 'movies-add',
+                component: _MovieAdd2.default
+            }
+        }
     }
 });
 
 appRoutes.start(vueInstance, 'body');
 
-},{"./components/App.vue":9,"./pages/Dashboard.vue":15,"./vuex/store":16,"vue":7,"vue-resource":4,"vue-router":5,"vue-validator":6}],15:[function(require,module,exports){
+},{"./components/App.vue":9,"./components/Movies/MovieAdd.vue":10,"./components/Movies/MovieList.vue":11,"./pages/Dashboard.vue":19,"./pages/Movies.vue":20,"./vuex/store":21,"vue":7,"vue-resource":4,"vue-router":5,"vue-validator":6}],19:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -19876,7 +20048,21 @@ if (module.hot) {(function () {  module.hot.accept()
     hotAPI.update("_v-ef45aed6", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
   }
 })()}
-},{"./../components/Todo/TodoItems.vue":11,"vue":7,"vue-hot-reload-api":3}],16:[function(require,module,exports){
+},{"./../components/Todo/TodoItems.vue":15,"vue":7,"vue-hot-reload-api":3}],20:[function(require,module,exports){
+"use strict";
+if (module.exports.__esModule) module.exports = module.exports.default
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<router-view></router-view>\n"
+if (module.hot) {(function () {  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), true)
+  if (!hotAPI.compatible) return
+  if (!module.hot.data) {
+    hotAPI.createRecord("_v-79392b92", module.exports)
+  } else {
+    hotAPI.update("_v-79392b92", module.exports, (typeof module.exports === "function" ? module.exports.options : module.exports).template)
+  }
+})()}
+},{"vue":7,"vue-hot-reload-api":3}],21:[function(require,module,exports){
 (function (process){
 'use strict';
 
@@ -19896,6 +20082,10 @@ var _todoStore = require('./../components/Todo/todoStore');
 
 var _todoStore2 = _interopRequireDefault(_todoStore);
 
+var _movieStore = require('./../components/Movies/movieStore');
+
+var _movieStore2 = _interopRequireDefault(_movieStore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _vue2.default.use(_vuex2.default);
@@ -19905,12 +20095,13 @@ var debug = process.env.NODE_ENV !== 'production';
 
 exports.default = new _vuex2.default.Store({
     modules: {
-        todoStore: _todoStore2.default
+        todoStore: _todoStore2.default,
+        movieStore: _movieStore2.default
     },
     strict: debug
 });
 
 }).call(this,require('_process'))
-},{"./../components/Todo/todoStore":13,"_process":1,"vue":7,"vuex":8}]},{},[14]);
+},{"./../components/Movies/movieStore":13,"./../components/Todo/todoStore":17,"_process":1,"vue":7,"vuex":8}]},{},[18]);
 
 //# sourceMappingURL=main.js.map
